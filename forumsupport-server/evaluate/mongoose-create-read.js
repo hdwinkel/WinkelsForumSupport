@@ -1,6 +1,6 @@
-require("./config/database");
+require("../config/database");
 
-var ForumEntry = require('./models/forumentry');
+var ForumEntry = require('../models/forumentry');
 
 var entry = new ForumEntry({
 	forum: 'SPON',

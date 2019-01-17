@@ -1,4 +1,5 @@
 'use strict';
+var ForumEntry = require('../models/forumentry');
 
 
 /**
@@ -23,12 +24,24 @@ exports.createEntry = function() {
 exports.listEntries = function(limit,q) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = "";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
+    ForumEntry.find({}, function(err, entries) {
+      if (err) throw err;
+      // entries is an array of all forum entries
+      //console.log("Anzahl Entries: " + entries.length);
+      //console.log(entries);
+
+      examples['application/json'] = entries;
+      //console.log("Examples: ");
+      //console.log(examples);
+  
+      if (Object.keys(examples).length > 0) {
+        resolve(examples[Object.keys(examples)[0]]);
+      } else {
+        resolve();
+      }
+
+    });
+
   });
 }
 

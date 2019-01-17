@@ -5,10 +5,9 @@ info:
   title: "Forum Support"
   license:
     name: "MIT"
-host: "virtserver.swaggerhub.com"
+host: "localhost:8080"
 basePath: "/hdwinkel/ForumSupport/1.0.0"
 schemes:
-- "https"
 - "http"
 consumes:
 - "application/json"

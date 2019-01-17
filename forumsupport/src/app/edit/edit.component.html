@@ -1,3 +1,4 @@
-<p>
-  edit works!
-</p>
+<div>
+    <textarea cols="80" rows="8" (input)="answertext = $event.target.value"></textarea>
+    <p><button (click)="pushMe()">pushMeToLog</button></p>
+</div>

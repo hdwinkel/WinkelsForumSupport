@@ -1,0 +1,238 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Forum Support"
+  license:
+    name: "MIT"
+host: "virtserver.swaggerhub.com"
+basePath: "/hdwinkel/ForumSupport/1.0.0"
+schemes:
+- "https"
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /forums:
+    get:
+      tags:
+      - "forums"
+      summary: "List of all Forums"
+      description: "list all forum names, requires log in"
+      operationId: "listForums"
+      parameters: []
+      responses:
+        200:
+          description: "An array of forums"
+          schema:
+            $ref: "#/definitions/Forums"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Forums"
+  /forums/{forumId}/entries:
+    get:
+      tags:
+      - "entries"
+      summary: "get all entries per forum"
+      operationId: "listEntriesPerForum"
+      parameters:
+      - name: "forumId"
+        in: "path"
+        description: "The id of the entry to retrieve"
+        required: true
+        type: "string"
+      - name: "limit"
+        in: "query"
+        description: "How many entries to return at one time (max 100)"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "q"
+        in: "query"
+        description: "searchstring"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "An paged array of forum entries"
+          headers:
+            x-next:
+              type: "string"
+              description: "A link to the next page of responses"
+          schema:
+            $ref: "#/definitions/Entries"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Entries"
+  /entries:
+    get:
+      tags:
+      - "entries"
+      summary: "List all forum entries (for a specific user) according query parameters"
+      operationId: "listEntries"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "How many entries to return at one time (max 100)"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "q"
+        in: "query"
+        description: "searchstring"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "An paged array of forum entries"
+          headers:
+            x-next:
+              type: "string"
+              description: "A link to the next page of responses"
+          schema:
+            $ref: "#/definitions/Entries"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Entries"
+    post:
+      tags:
+      - "entries"
+      summary: "Create a forum entry"
+      operationId: "createEntry"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Entries"
+  /entries/{entryId}:
+    get:
+      tags:
+      - "entries"
+      summary: "a specific entry per ID"
+      operationId: "showEntryById"
+      parameters:
+      - name: "entryId"
+        in: "path"
+        description: "The id of the entry to retrieve"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Expected response to a valid request"
+          schema:
+            $ref: "#/definitions/Entry"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Entries"
+definitions:
+  Entry:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+        example: "5c2f202b99df81fe887463c4"
+      forum:
+        $ref: "#/definitions/Forum"
+      user:
+        type: "string"
+        example: "winkel"
+      articleName:
+        type: "string"
+        example: "Name des Artikels"
+      articleDate:
+        type: "string"
+        example: "2019-01-03T18:18:12.000Z"
+      articleLink:
+        type: "string"
+        example: "www.meinforum.de"
+      articleText:
+        type: "string"
+        example: "Der zusammengefasste Text des Artikels"
+      answerDate:
+        type: "string"
+        example: "2019-01-03T18:35:00.000Z"
+      answerName:
+        type: "string"
+        example: "Name des Forumbeitrags"
+      answerText:
+        type: "string"
+        example: "das ist der Forumsbeitrag"
+      published:
+        type: "boolean"
+        example: false
+      publishedDate:
+        type: "string"
+        example: "2019-01-03T19:10:00.000Z"
+      publishedLink:
+        type: "string"
+        example: "www.meinforum.de/winkel"
+      tags:
+        $ref: "#/definitions/Hashtags"
+    example:
+      articleName: "Name des Artikels"
+      publishedLink: "www.meinforum.de/winkel"
+      answerDate: "2019-01-03T18:35:00.000Z"
+      answerName: "Name des Forumbeitrags"
+      answerText: "das ist der Forumsbeitrag"
+      articleText: "Der zusammengefasste Text des Artikels"
+      published: false
+      tags: ""
+      forum:
+        name: "Mein Forum"
+        id: "meinforum"
+      articleLink: "www.meinforum.de"
+      articleDate: "2019-01-03T18:18:12.000Z"
+      _id: "5c2f202b99df81fe887463c4"
+      publishedDate: "2019-01-03T19:10:00.000Z"
+      user: "winkel"
+  Entries:
+    type: "array"
+    items:
+      $ref: "#/definitions/Entry"
+  Hashtag:
+    type: "string"
+    example: "Politics"
+  Hashtags:
+    type: "array"
+    items:
+      $ref: "#/definitions/Hashtag"
+  Forum:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "meinforum"
+      name:
+        type: "string"
+        example: "Mein Forum"
+    example:
+      name: "Mein Forum"
+      id: "meinforum"
+  Forums:
+    type: "array"
+    items:
+      $ref: "#/definitions/Forum"
+  Error:
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"

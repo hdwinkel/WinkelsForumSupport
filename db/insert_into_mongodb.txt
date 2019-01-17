@@ -1,0 +1,35 @@
+create:
+---------------------------------------------------------------------
+use forumdb
+
+db.createCollection("forumCollection")
+
+
+var articledate=new Date("2018-12-27T18:00:00Z")
+var answerdate=new Date("2018-12-27T19:00:00Z")
+var publishdate=new Date("2018-12-27T19:01:00Z")
+
+db.forumCollection.insert({
+	forum: 'SPON',
+	user: 'winkel',
+	tags: ['#Politics', '#Russia', '#Economy'],
+	articleName: 'Name des Artikels',
+	articleDate: articledate,
+	articleLink: 'http://www.spiegel.de',
+	articleText: 'Der zusammengefasste Text des Artikels',
+	answerDate: answerdate,
+	answerName: 'Name des Forumbeitrags',
+	answerText: 'das ist der Forumsbeitrag',
+	published: 1,
+	publishedDate: publishdate,
+	publishedLink: 'http://www.spiegel.de/winkel'
+})
+
+
+search:
+----------------------------------------------------------------------
+db.forumCollection.find().pretty()
+
+db.forumCollection.find({ tags : "#Politics"}).pretty()
+
+db.forumCollection.find( { tags: { $all: ["#Politics", "#Russia"] } } ).pretty()

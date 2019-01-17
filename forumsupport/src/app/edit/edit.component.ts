@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditComponent implements OnInit {
 
+  answertext: string;
+
   constructor() { }
+
+  pushMe() {
+    console.log( "TextAreaComponent::answertext: " + this.answertext);
+  }
 
   ngOnInit() {
   }

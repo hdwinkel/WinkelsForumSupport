@@ -1,0 +1,18 @@
+curl to example:
+curl -X POST "http://localhost:8080/hdwinkel/ForumSupport/1.0.0/entries" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{  \"_id\": \"5c2f202b99df81fe887463c4\",  \"forum\": {    \"id\": \"meinforum\",    \"name\": \"Mein Forum\"  },  \"user\": \"winkel\",  \"articleName\": \"Name des Artikels\",  \"articleDate\": {},  \"articleLink\": \"www.meinforum.de\",  \"articleText\": \"Der zusammengefasste Text des Artikels\",  \"answerDate\": {},  \"answerName\": \"Name des Forumbeitrags\",  \"answerText\": \"das ist der Forumsbeitrag\",  \"published\": \"true for published, false for unpublished\",  \"publishedDate\": {},  \"publishedLink\": \"www.meinforum.de/winkel\",  \"tags\": [    \"Politics\"  ]}"
+
+Swagger schema validation:
+http://localhost:8002/?url=http://localhost:8808/swagger/hdwinkel-ForumSupport-1.0.0-swagger.json
+or including debug
+http://localhost:8002/debug/?url=http://localhost:8808/swagger/hdwinkel-ForumSupport-1.0.0-swagger.json
+	(
+		start local swagger-validator in c:\work\git\Swagger\validator-badge :
+		mvn package jetty:run
+		
+		start local http-server nginx in c:\Tools\nginx-1.15.8
+		start nginx
+		
+		copy json hdwinkel-ForumSupport-1.0.0-swagger.json to
+		C:\Tools\nginx-1.15.8\html\swagger
+	)
+	

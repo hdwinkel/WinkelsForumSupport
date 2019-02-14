@@ -1,9 +1,18 @@
 require("../config/database");
 
 var ForumEntry = require('../models/forumentry');
+const crypto = require("crypto");
+var ObjectId = require('mongoose').Types.ObjectId;
+
+var entryid = new ObjectId(crypto.randomBytes(12).toString("hex")); // create a mongodb compatible unique id
 
 var entry = new ForumEntry({
+	_id: entryid,
 	forum: 'SPON',
+	forum: {
+		name : "Testorum",
+		id : "Test Forum 1"
+	  },
 	user: 'winkel',
 	tags: ['#Politics', '#Russia', '#Economy'],
 	articleName: 'Name des Artikels',
@@ -18,11 +27,17 @@ var entry = new ForumEntry({
 	publishedLink: 'http://www.spiegel.de/winkel'
 });
 
-entry.save();
+console.log("EntryId: " + entryid);
+entry.save(function (err, rentry) {
+	if (err) throw err;
+	console.log("Created Entry: ");
+  	console.log(rentry);
+  });
 
-// get all the users
+// get all the entries
 ForumEntry.find({}, function(err, entries) {
-  if (err) throw err;
-  // object of all the users
-  console.log("Anzahl Elemente: " + entries.length);
-});
+	if (err) throw err;
+	// object of all the entries
+	console.log("Anzahl Entries: " + entries.length);
+  });
+  

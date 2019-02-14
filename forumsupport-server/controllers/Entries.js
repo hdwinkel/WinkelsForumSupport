@@ -4,7 +4,13 @@ var utils = require('../utils/writer.js');
 var Entries = require('../service/EntriesService');
 
 module.exports.createEntry = function createEntry (req, res, next) {
-  Entries.createEntry()
+
+  var entry = req.swagger.params['entry'].value;
+  Entries.saveEntryToDB(entry)
+    .then(function (entry) {
+    // console.log("resp-catch0: " + entry);
+      return Entries.createEntry(entry);
+    })
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -48,3 +54,4 @@ module.exports.showEntryById = function showEntryById (req, res, next) {
       utils.writeJson(res, response);
     });
 };
+

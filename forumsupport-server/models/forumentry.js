@@ -2,7 +2,10 @@ var mongoose = require('mongoose');
 
 var ForumEntrySchema = new mongoose.Schema({
 
-	forum: String,
+	forum: {
+		id: String,
+		name:String
+	},
 	user: String,
 	tags: [String],
 	articleName: String,

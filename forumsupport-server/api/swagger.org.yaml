@@ -166,7 +166,6 @@ definitions:
         example: "Name des Artikels"
       articleDate:
         type: "string"
-        format: "date-time"
         example: "2019-01-03T18:18:12.000Z"
       articleLink:
         type: "string"
@@ -176,7 +175,6 @@ definitions:
         example: "Der zusammengefasste Text des Artikels"
       answerDate:
         type: "string"
-        format: "date-time"
         example: "2019-01-03T18:35:00.000Z"
       answerName:
         type: "string"
@@ -189,13 +187,12 @@ definitions:
         example: true
       publishedDate:
         type: "string"
-        format: "date-time"
         example: "2019-01-03T19:10:00.000Z"
       publishedLink:
         type: "string"
         example: "www.meinforum.de/winkel"
       tags:
-        $ref: "#/definitions/Hashtag"
+        $ref: "#/definitions/Hashtags"
     example:
       articleName: "Name des Artikels"
       publishedLink: "www.meinforum.de/winkel"
@@ -224,6 +221,10 @@ definitions:
     example:
     - "Politics"
     - "IT"
+  Hashtags:
+    type: "array"
+    items:
+      $ref: "#/definitions/Hashtag"
   Forum:
     type: "object"
     properties:

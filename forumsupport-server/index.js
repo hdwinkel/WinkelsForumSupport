@@ -1,5 +1,4 @@
 'use strict';
-
 require("./config/database");
 
 var fs = require('fs'),
